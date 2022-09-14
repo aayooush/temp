@@ -1,0 +1,36 @@
+{
+	"general": {
+		"work_place": "XGen-Output",
+		"pretrained_model_path": null,
+		"enable_ddp": true,
+		"CUDA_VISIBLE_DEVICES": "0,1,2,3"
+	},
+	"training_script_args": {
+		"common_train_epochs": 30,
+		"video-scale": 2,
+		"learning-rate": 0.01,
+		"batch_size": 16
+	},
+	"user_requirements": {
+		"accuracy": null,
+		"latency": 30,
+		"margin": 2,
+		"max_sampling": 3
+	},
+	"pruning": {
+		"prune_method": "magnitude",
+		"prune_weight_ranking": "global",
+		"prune_rate": 0.5,
+		"prune_layers": null,
+		"admm_lr": 0.01
+	},
+	"scaling": {
+		"searching_variable": null,
+		"searching_range": null,
+		"searching_granularity": null
+	},
+	"compiler": {
+		"input_shape": "(1,1,28,28)",
+		"opset_version": 11
+	}
+}
