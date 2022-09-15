@@ -1,15 +1,18 @@
 {
 	"general": {
-		"work_place": "XGen-Output",
-		"pretrained_model_path": null,
+		"work_place": null,
 		"enable_ddp": true,
-		"CUDA_VISIBLE_DEVICES": "0,1,2,3"
+		"CUDA_VISIBLE_DEVICES": "0",
+		"pretrained_model_path": "./checkpoint/mnist_cnn.pt"
 	},
 	"training_script_args": {
+		"train_data_path": "./data",
+    		"train_label_path": null,
+    		"eval_data_path": "./data",
+    		"eval_label_path": null,
 		"common_train_epochs": 30,
-		"video-scale": 2,
 		"learning-rate": 0.01,
-		"batch_size": 16
+		"batch_size": 32
 	},
 	"user_requirements": {
 		"accuracy": null,
