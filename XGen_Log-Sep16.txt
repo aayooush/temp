@@ -1,0 +1,34 @@
+You chose "Compatibility test". We will create a temporary workplace for you, and will delete it after the testing.
+2022-09-16 23: 23: 48, 757 - root - INFO - AIMET
+Your current workplace is /tmp/7a878f8af3c04331a7505f4e50ef3763
+A new search is started!
+****************************config summary************************************************
+xgen-config-path: / root/Projects/mnist-xgen-test/mnist_config/config_for_xgen.xgen.json
+xgen-workplace: / tmp/7a878f8af3c04331a7505f4e50ef3763
+xgen-resume:  False
+xgen-mode:  compatible_testing
+xgen-pretrained-model-path:  ./checkpoint/mnist_cnn.pt
+Detail args:  {'origin': {'common_train_epochs': 200, 'root_path': './___workplace___/', 'pretrain_model_weights_path': None, 'train_data_path': None,'train_label_path': None, 'eval_data_path': None, 'eval_label_path': None, 'scaling_factor': 2, 'num_classes': 10, 'batch_size': 128}, 'general': {'user_id': 'test', 'work_place': '/tmp/7a878f8af3c04331a7505f4e50ef3763', 'random_seed': 3407, 'enable_ddp': False, 'CUDA_VISIBLE_DEVICES': '0', 'tran_scripts_path': None}, 'prune': {'sp_store_weights': None, 'sp_lars': False, 'sp_lars_trust_coef': 0.001, 'sp_backbone': False, 'sp_retrain': False, 'sp_admm': False, 'sp_admm_multi': False, 'sp_retrain_multi': False, 'sp_config_file': None, 'sp_subset_progressive': False, 'sp_admm_fixed_params': False, 'sp_no_harden': False, 'nv_sparse': False,'sp_load_prune_params': None, 'sp_store_prune_params': None, 'generate_rand_seq_gap_yaml': False, 'sp_admm_update_epoch': 5, 'sp_admm_update_batch': None, 'sp_admm_rho': 0.001, 'sparsity_type': 'block_punched', 'sp_admm_lr': 0.01, 'admm_debug': False, 'sp_global_weight_sparsity': False, 'sp_prune_threshold': -1.0,'sp_block_irregular_sparsity': '(0,0)', 'sp_block_permute_multiplier': 2, 'sp_admm_block': '(8,4)', 'sp_admm_buckets_num': 16, 'sp_admm_elem_per_row': 1, 'sp_admm_tile':None, 'sp_admm_select_number': 4, 'sp_admm_pattern_row_sub': 1, 'sp_admm_pattern_col_sub': 4, 'sp_admm_data_format': None, 'sp_admm_do_not_permute_conv': False,'sp_gs_output_v': None, 'sp_gs_output_ptr': None, 'sp_load_frozen_weights': None, 'retrain_mask_pattern': 'weight', 'sp_update_init_method': 'weight','sp_mask_update_freq': 10, 'retrain_mask_sparsity': -1.0, 'retrain_mask_seed': None, 'sp_prune_before_retrain': False, 'output_compressed_format': False, 'sp_grad_update': False, 'sp_grad_decay': 0.98, 'sp_grad_restore_threshold': -1, 'sp_global_magnitude': False, 'sp_pre_defined_mask_dir': None, 'sp_prune_ratios': 0, 'admm_sparsity_type': 'block_punched', 'admm_block': '(8,4)', 'prune_threshold': -1.0}, 'quantization': {'qt_aimet': False, 'qat': True, 'fold_layers': True,'cross_layer_equalization': False, 'bias_correction': True, 'rounding_mode': 'nearest', 'num_quant_samples': 1000, 'num_bias_correct_samples': 1000, 'weight_bw': 8,'act_bw': 8, 'quant_scheme': 'tf_enhanced', 'layers_to_ignore': [], 'auto_add_bias': True, 'perform_only_empirical_bias_corr': True}, 'task': {'specific_scenarios':'BasicTest', 'pretrained_model_path': './checkpoint/mnist_cnn.pt', 'state': {'stage': 0, 'cycles': 0}, 'max_searching': 10}, 'user_requirements': {'power': None,'accuracy': None, 'accuracy_reverse_yn': 0, 'model_size': None, 'memory_size': None, 'latency': 0.1, 'margin': 0.1, 'primary_type': 'latency', 'primary_range': '>','secondary_type': 'accuracy', 'secondary_range': '<', 'searching_variable': 'scaling_factor', 'searching_range': [1, 23], 'searching_step_size': 1, 'target_type':'latency'}, 'train': {'accuracy_reverse_yn': 0, 'common_save_best_yn': 1, 'trained_yn': False}, 'compiler': {'input_shape': '(1, 1, 28, 28)', 'opset_version': 11,'devices': []}, 'distillation': {'distillation_method': None, 'enable_ddp': False, 'enable_dp': False, 'input_shape': None, 'original_loss_weights': 0.1,'tag_loss_weights': 0.9, 'tag_loss': 'kl', 'tag_temperature': 4, 'tag_loss_combination_method': 'avg', 'feature_loss_weights': 0.9, 'feature_default_temperature': 1,'advance_feature_mapping': {}, 'regularization_loss_weights': 1, 'regularization_loss_types': [], 'discriminator_lr': 0.0001}}
+Current search has 1 stages
+Stage:  1
+Max search cycles:  1
+****************************config summary************************************************
+Current state: stage: 1/1 | cycles: 1/1
+Total jobs: 1
+processing job 1/1
+Training...
+MKL_THREADING_LAYER = GNU CUDA_DEVICE_ORDER = PCI_BUS_ID CUDA_VISIBLE_DEVICES = 0 python train_script_main.py
+2022-09-16 23: 23: 49, 872 - root - INFO - AIMET
+Traceback(most recent call last):
+    File "xgen_scripts.py", line 96, in main
+    xgen(training_main, run_mock,
+         training_script_path=training_script_path, log_path=log_path)
+    File "/root/miniconda3/envs/xgen/lib/python3.7/site-packages/xgen_main-1.0.11-py3.7.egg/xgen/xgen_run.py", line 402, in xgen
+    internal_data = train_module(job, training_main)
+    File "/root/miniconda3/envs/xgen/lib/python3.7/site-packages/xgen_main-1.0.11-py3.7.egg/xgen/train_module.py", line 160, in train_module
+    args_ai = model_train_main(job, training_main)
+    File "/root/miniconda3/envs/xgen/lib/python3.7/site-packages/xgen_main-1.0.11-py3.7.egg/xgen/train_module.py", line 145, in model_train_main
+    raise Exception('Training failed')
+Exception: Training failed
+
+Error found. Please check log file at / tmp/7a878f8af3c04331a7505f4e50ef3763/info_20220916232348.log
