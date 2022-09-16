@@ -6,11 +6,11 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
-# xgen_tools START
+# xgen_tools
 from co_lib import Co_Lib as CL
 from xgen_tools import *
-COCOPIE_MAP = {'train_epochs': 'common_train_epochs'}
-# xgen_tools END
+COCOPIE_MAP = {'epochs': 'common_train_epochs'}
+# xgen_tools
 
 
 class Net(nn.Module):
@@ -46,6 +46,9 @@ def train(args, model, device, train_loader, optimizer, epoch):
         optimizer.zero_grad()
         output = model(data)
         loss = F.nll_loss(output, target)
+        # xgen_tools
+        loss = CL.update_loss(loss)
+        # xgen_tools
         loss.backward()
         optimizer.step()
         if batch_idx % args.log_interval == 0:
@@ -104,12 +107,12 @@ def training_main(args_ai):
                         help='For Saving the current Model')
     args = parser.parse_args()
 
-    # xgen_tools START
-    user_args = xgen_init(args, args_ai, COCOPIE_MAP)
-    # xgen_tools END
+    # xgen_tools
+    orginalArgs = xgen_init(args, args_ai, COCOPIE_MAP)
+    # xgen_tools
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
-    print('CUDA:', use_cuda)
+
     torch.manual_seed(args.seed)
 
     device = torch.device("cuda" if use_cuda else "cpu")
@@ -135,48 +138,28 @@ def training_main(args_ai):
     test_loader = torch.utils.data.DataLoader(dataset2, **test_kwargs)
 
     model = Net().to(device)
+    # xgen_tools
+    xgen_load(model, args_ai=args_ai)
+    # xgen_tools
     optimizer = optim.Adadelta(model.parameters(), lr=args.lr)
 
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
+    # xgen_tools
+    CL.init(args=args_ai, model=model,
+            optimizer=optimizer, data_loader=train_loader)
+    # xgen_tools
 
-    # xgen_tools START
-    # load model
-    xgen_load(model, args_ai=args_ai)
-    CL.init(args=args_ai, model=model, optimizer=optimizer,
-            data_loader=train_loader)
-    # xgen_tools END
-    accuracy = 0
     for epoch in range(1, args.epochs + 1):
-        # xgen_tools START
+        # xgen_tools
         CL.before_each_train_epoch(epoch=epoch)
-        # xgen_tools END
-
+        # xgen_tools
+        train(args, model, device, train_loader, optimizer, epoch)
+        evaluationResult = test(model, device, test_loader)
+        # xgen_tools
+        xgen_record(args_ai, model, evaluationResult, epoch=epoch)
+        # xgen_tools
         scheduler.step()
-
-        # xgen_tools START
         CL.after_scheduler_step(epoch=epoch)
-        # xgen_tools END
-
-        model.train()
-        for batch_idx, (data, target) in enumerate(train_loader):
-            data, target = data.to(device), target.to(device)
-            optimizer.zero_grad()
-            output = model(data)
-            loss = F.nll_loss(output, target)
-            # xgen_tools START
-            loss = CL.update_loss(loss)
-            # xgen_tools END
-            loss.backward()
-            optimizer.step()
-            if batch_idx % args.log_interval == 0:
-                print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                    epoch, batch_idx * len(data), len(train_loader.dataset),
-                    100. * batch_idx / len(train_loader), loss.item()))
-                if args.dry_run:
-                    break
-        accuracy = test(model, device, test_loader)
-
-    # xgen_tools START
-    xgen_record(args_ai, model, accuracy, epoch=-1)
+    if args.save_model:
+        torch.save(model.state_dict(), "mnist_cnn.pt")
     return args_ai
-    # xgen_tools END

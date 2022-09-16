@@ -1,0 +1,50 @@
+{
+    "general": {
+      "work_place": null,
+      "tran_scripts_path": null,
+      "enable_ddp": false,
+      "CUDA_VISIBLE_DEVICES": "0",
+      "random_seed": 3407,
+      "pretrained_model_path": "./checkpoint/mnist_cnn.pt"
+    },
+    "user_requirements": {
+      "accuracy": 90.0,
+      "latency": 10.0,
+      "margin": 0.1,
+      "max_sampling": 10
+    },
+    "compiler": {
+      "input_shape": "(1, 1, 28, 28)"
+    },
+    "training_script_args": {
+      "train_data_path": null,
+      "train_label_path": null,
+      "eval_data_path": null,
+      "eval_label_path": null,
+      "common_train_epochs": 200,
+      "scaling_factor": 2,
+      "root_path": "./___workplace___/",
+      "num_classes": 10,
+      "batch_size": 128
+    },
+    "pruning": {
+      "prune_method": null,
+      "prune_layers": null,
+      "prune_weight_ranking": "intra-layer",
+      "prune_rate": 0,
+      "admm_update_epoch": 5,
+      "admm_rho": 0.001,
+      "admm_sparsity_type": "block_punched",
+      "admm_lr": 0.01,
+      "admm_block": "(8,4)",
+      "prune_threshold": -1.0
+    },
+    "scaling": {
+      "searching_variable": "scaling_factor",
+      "searching_range": [
+        1,
+        23
+      ],
+      "searching_granularity": 1
+    }
+  }
